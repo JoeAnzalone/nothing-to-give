@@ -3,80 +3,167 @@ var Q = require('q');
 var request = require('request');
 var Pledge = require("../pledge");
 var Email = require("../email");
+//var ipn = require('paypal-ipn');
 var mongo = require('mongodb').MongoClient,
     ObjectID = require('mongodb').ObjectID,
     MONGO_URI = process.env.MONGO_URI;
 
 // Environment Variables
+var PAYPAL_ENDPOINT = process.env.PAYPAL_ENDPOINT;
+var PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID;
+var PAYPAL_SECRET = process.env.PAYPAL_SECRET;
+var DOMAIN_NAME = process.env.DOMAIN_NAME;
 
 module.exports = {
 
     init: function(app){
 
-        // Paypal - Instant Payment Notification
-        app.post("/pay/paypal/ipn",function(req,res){
+        // Because Paypal sucks.
+        var _tempStorage = {};
 
-            console.log(req.query);
-            console.log(req.body);
+        // Paypal - Pledge What You Want
+        app.post("/pay/paypal",function(req,res){
 
-            // Verify that the coinbase secret is correct
-            if(req.query.secret!=COINBASE_SECRET) return res.send("nice try");
+            // Vars to save because the Paypal REST API sucks SO MUCH
+            var params = {
+                backer_name: req.body.backer_name,
+                backer_email: req.body.backer_email,
+                pledge_total: req.body.pledge_total,
+                pledge_split: req.body.pledge_split
+            };
 
-            // Create pledge from this, and email backer
-            // (not redirect, coz this is the IPN)
-            var order = req.body.order;
-            var custom = JSON.parse(order.custom);
-            Pledge.create({
-                backer_name: custom.backer_name,
-                backer_email: custom.backer_email,
-                pledge_split: custom.pledge_split,
-                pledge_total: custom.pledge_total,
-                payment_method: "coinbase",
-                payment_data: {
-                    order: order
-                }
-            }).then(function(pledge){
-                Email.sendPledgeCreatedEmail(pledge); // Send email
-                res.send("success!"); // let Coinbase know it was a success!
+            // Get payment page & redirect to it.
+            Q.fcall(_getOAuthToken).then(function(accessToken){
+
+                // Save this for later. It's valid for 8 hours
+                params.accessToken = accessToken;
+
+                var deferred = Q.defer();
+                request.post({
+                    url: PAYPAL_ENDPOINT+"/v1/payments/payment",
+                    headers: {
+                        'Authorization': 'Bearer '+accessToken
+                    },
+                    json: {
+                        "intent":"sale",
+                        "redirect_urls":{
+                            "return_url": DOMAIN_NAME + "/pay/paypal/success",
+                            "cancel_url": DOMAIN_NAME
+                        },
+                        "payer":{
+                            "payment_method":"paypal"
+                        },
+                        "transactions":[
+                            {
+                                "amount":{
+                                    "total": req.body.pledge_total,
+                                    "currency": "USD"
+                                },
+                                "description":"Nothing To Hide Backer"
+                            }
+                        ]
+                    }
+                },function(error,response,body){
+                    if(error) return res.send("paypal error");
+                    deferred.resolve(body);
+                });
+                return deferred.promise;
+
+            }).then(function(sale){
+                
+                // Save params
+                var paymentID = sale.id;
+                var link = sale.links[1].href;
+                var token = link.substr(link.indexOf("&token=")+7);
+                params.paymentID = paymentID;
+                _tempStorage[token] = params;
+
+                // Redirect user
+                res.redirect(link);
+
             });
 
         });
 
-        // COINBASE - Get the pledge ID
+        // Paypal - Execute Payment & Create Pledge
         app.get("/pay/paypal/success",function(req,res){
 
-            res.send("<pre>"+JSON.stringify(req.body,null,4)+"</pre>");
+            // Load them params
+            var params = _tempStorage[req.query.token];
 
-            /*var query = {"payment.data.order.id":req.query.order.id};
-            mongo.connect(MONGO_URI,function(err,db){
-                if(err){ return console.error(err); }
-                db.collection('pledges').find(query).toArray(function(err,results){
-                    
-                    if(err){ return console.error(err); }
-                    db.close();
+            // 1) Execute payment
+            Q.fcall(function(){
 
-                    var pledge = results[0];
-                    if(pledge){
-                        res.redirect("/pledge/"+pledge._id);
-                    }else{
-                        // If IPN ain't instant...
-                        res.send(
-                            "Woops! Either the servers are still proceessing your pledge, "+
-                            "or I messed up the code. Probably both. Please check back later, "+
-                            "check your email, and shoot me a message at "+process.env.REPLY_TO_EMAIL+" "+
-                            "if shenanigans persist. Thank you!"
-                        );
+                var deferred = Q.defer();
+                request.post({
+                    url: PAYPAL_ENDPOINT+"/v1/payments/payment/"+params.paymentID+"/execute/",
+                    headers: {
+                        "Authorization": "Bearer "+params.accessToken
+                    },
+                    json: {
+                        "payer_id": req.query.PayerID
                     }
-                    
+                },function(error,response,body){
+                    if(error) return res.send("paypal error");
+                    deferred.resolve(body);
                 });
-            });*/
+                return deferred.promise;
+
+            // 2) Create pledge
+            }).then(function(payment){
+                return Pledge.create({
+                    backer_name: params.backer_name,
+                    backer_email: params.backer_email,
+                    pledge_split: params.pledge_split,
+                    pledge_total: params.pledge_total,
+                    payment_method: "paypal",
+                    payment_data: payment
+                });
+
+            // 3) Email & Redirect to pledge's page
+            }).then(function(pledge){
+                Email.sendPledgeCreatedEmail(pledge); // Send email
+                res.redirect("/pledge/"+pledge._id);
+            });
 
         });
 
     },
 
     refundPledge: function(pledge,options){
+        
         var deferred = Q.defer();
+
+        // Add up all the unclaimed stages
+        var s = pledge.stages;
+        var refundAmount = 0;
+        refundAmount += s.demo.claimed ? 0 : s.demo.amount;
+        refundAmount += s.alpha.claimed ? 0 : s.alpha.amount;
+        refundAmount += s.beta.claimed ? 0 : s.beta.amount;
+        refundAmount += s.done.claimed ? 0 : s.done.amount;
+
+        // The sale ID
+        var saleID = pledge.payment.data.txn_id;
+
+        // Partial refund
+        request.post({
+            url: "https://api.sandbox.paypal.com/v1/payments/sale/"+saleID+"/refund",
+            json:{
+                "amount": {
+                    "total": refundAmount,
+                    "currency": "USD"
+                }
+            }
+        },function(error,response,body){
+            console.log(error);
+            console.log(response);
+            console.log(body);
+            if(error){
+                return;
+            }
+            deferred.resolve(body);
+        });
+
         // Promise it'll be refunded
         return deferred.promise;
     },
@@ -87,4 +174,24 @@ module.exports = {
         return Q(true);
     }
 
+};
+
+var _getOAuthToken = function(){
+    var deferred = Q.defer();
+    request.post({
+        url: PAYPAL_ENDPOINT+"/v1/oauth2/token",
+        auth:{
+            user:PAYPAL_CLIENT_ID,
+            pass:PAYPAL_SECRET,
+            sendImmediately:true
+        },
+        form: {
+            "grant_type": "client_credentials"
+        }
+    },function(error,response,body){
+        if(error) return res.send("oauth error");
+        var creds = JSON.parse(body);
+        deferred.resolve(creds.access_token);
+    });
+    return deferred.promise;
 };

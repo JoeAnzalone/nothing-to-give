@@ -48,57 +48,7 @@ document.getElementById('bitcoin').addEventListener('click', function(e) {
 // PAYPAL //
 ////////////
 
-document.getElementById('paypal').addEventListener('click', function(e){
-
-	// Create new form
-	var form = document.createElement("form");
-	form.action = PAYPAL_API;
-	form.method = "POST";
-	form.target = "_top";
-
-	// The progress pledge form's values
-	var pledge = {
-		backer_name: document.querySelector("input[name=backer_name]").value,
-		backer_email: document.querySelector("input[name=backer_email]").value,
-		pledge_total: document.querySelector("input[name=pledge_total]").value,
-		pledge_split: document.querySelector("input[name=pledge_split]").value
-	};
-
-	// All parameters
-	var params = {
-
-		// Paypal
-		button: "buynow",
-		cmd: "_xclick",
-
-		// People
-		business: PAYPAL_EMAIL,
-		item_name: "Nothing To Hide Backer",
-
-		// Money
-		amount: pledge.pledge_total,
-		currency_code: "USD",
-
-		// URLs
-		address_override: 1,
-		notify_url: DOMAIN_NAME + "/pay/paypal/ipn",
-		"return": DOMAIN_NAME + "/pay/paypal/success",
-
-		// Custom
-		custom: JSON.stringify(pledge)
-
-	};
-
-	// Populate said variables
-	for(var name in params){
-		var input = document.createElement("input");
-		input.name = name;
-		input.value = params[name];
-		form.appendChild(input);
-	}
-
-	// POST Redirect
+document.getElementById('paypal').addEventListener('click', function(e) {
+	form.action = "/pay/paypal";
 	form.submit();
-
 });
-

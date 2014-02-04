@@ -36,6 +36,18 @@ module.exports = {
         // Admin: Get All Entries
         app.get("/admin/api",auth,function(req,res){
 
+            // Include payment data?...
+            var fields = req.query.paymentData ? {} : {"payment.data":0};
+
+            // Return all of 'em
+            mongo.connect(MONGO_URI, function(err,db) {
+                if(err) { return console.error(err); }
+                db.collection('pledges').find({},fields).sort({_id:-1}).toArray(function(err,pledges){
+                    if(err) return console.error(err);
+                    res.send("<pre>"+JSON.stringify(pledges,null,4)+"</pre>");
+                    db.close();
+                });
+            });
         });
 
         // Admin: Charge a pledge
