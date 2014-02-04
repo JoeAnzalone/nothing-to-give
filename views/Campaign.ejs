@@ -1,0 +1,53 @@
+<%
+var goal = campaign.goal || 0;
+var demo = campaign.demo || 0;
+var alpha = campaign.alpha || 0;
+var beta = campaign.beta || 0;
+var done = campaign.done || 0;
+var total = demo+alpha+beta+done;
+var backers = campaign.backers || 0;
+%>
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<link href='/css/campaign.css' rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+
+		<div id="splash">
+
+			<div id="title">
+				<!--div style="position: relative;top: 27px;font-size:4em">NOTHING TO HIDE</div>
+				<div style="position: relative;top: -5px;color:#999">an anti-stealth game where you are your own watchdog</div-->
+			</div>
+
+			<div id="video_banner">
+				<div id="video_container">
+					<canvas id="video_meta" width="800" height="350"></canvas>
+					<div id="video_play" onclick="playVideo()"></div>
+					<div id="video_trailer"></div>
+				</div>
+			</div>
+
+			<div id="campaign_progress">
+				<div id="campaign_progress_bar" style="width:<%=(total/goal)*100%>%"></div>
+				<div id="campaign_progress_message">
+					RAISED $<%=Math.round(total)%> OUT OF $<%=Math.round(goal)%> FROM <%=backers%> BACKERS
+				</div>
+			</div>
+
+			<a href="/pledge" style="text-decoration:none;display:block;width:320px;margin:0 auto">
+				<div id="pledge_button">BACK THIS PROJECT</div>
+			</a>
+
+		</div>
+
+		<div style="text-align:center">
+			<br>...<br>...<br>...<br>...<br>...<br>...<br>...<br>...<br>...<br>...<br>...<br>...<br>...<br>...<br>...<br>...<br>...<br>...<br>...<br>...
+		</div>
+
+	</body>
+</html>
+
+<script src="/js/campaign.js"></script>

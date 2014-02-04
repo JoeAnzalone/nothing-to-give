@@ -1,0 +1,74 @@
+@font-face {
+	font-family: 'Raleway';
+	src: url(/fonts/Raleway.woff) format('woff');
+}
+
+#content {
+	width:800px; margin:100px auto;
+	font-family: Raleway;
+	font-size: 20px;
+}
+#content .header {
+	font-size: 40px;
+	margin-bottom: 15px;
+}
+#bar {
+	width:799px;
+	height:50px;
+	overflow: hidden;
+	margin: 15px 0;
+	position: relative;
+	border-radius: 25px;
+
+	background:#000;
+}
+#bar > div {
+	position: absolute;
+}
+#bar_background {
+
+	width:0%; height:50px;
+	background: #CC2727;
+
+	-webkit-transition: width 1s ease-in-out;
+    -moz-transition: width 1s ease-in-out;
+    -ms-transition: width 1s ease-in-out;
+    -o-transition: width 1s ease-in-out;
+    transition: width 1s ease-in-out;
+
+}
+#bar_sections {
+	width:800px;
+}
+#bar_sections > div{
+	float:left;
+	text-align: center;
+	color:#fff;
+	height:20px;
+	padding: 15px 0;
+	font-size: 15px;
+	position: relative;
+	overflow: hidden;
+}
+#bar_sections > div > div{
+	position: absolute;
+	top:0; bottom:0; left:0; right:0;
+	border-right: 1px dashed #fff;
+}
+#bar_sections > div:last-child > div{
+	border-right: none;
+}
+
+.button {
+	margin: 50px auto 0 auto;
+	background: #ccc;
+	color: #555;
+	text-align: center;
+	padding: 10px;
+	width:200px;
+	border-radius: 100px;
+	cursor: pointer;
+}
+.button:hover {
+	background: #ddd;
+}

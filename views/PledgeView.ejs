@@ -1,0 +1,95 @@
+<%
+
+var total = 0;
+var claimed = 0;
+for(var stageID in pledge.stages){
+	var stage = pledge.stages[stageID];
+	total += stage.amount;
+	if(stage.claimed){
+		claimed += stage.amount;
+	}
+}
+
+var ratio_demo = pledge.stages.demo.amount/total;
+var ratio_alpha = pledge.stages.alpha.amount/total;
+var ratio_beta = pledge.stages.beta.amount/total;
+var ratio_done = pledge.stages.done.amount/total;
+
+%>
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<link href='/css/pledge_view.css' rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+
+		<%if(!pledge.cancelled){%>
+
+			<div id="content">
+
+				<div class="header">
+					Thank you, <%=pledge.backer.name%>!
+				</div>
+
+				<b>Your Progress Pledge:</b> ($<%=claimed.toFixed(2)%> claimed out of $<%=total.toFixed(2)%> pledged)
+
+				<div id="bar">
+					<div id="bar_background"></div>
+					<div id="bar_sections">
+						<div style="width:<%=ratio_demo*800%>px">
+							<div></div>
+							$<%=pledge.stages.demo.amount.toFixed(2)%> upfront
+						</div>
+						<div style="width:<%=ratio_alpha*800%>px">
+							<div></div>
+							$<%=pledge.stages.alpha.amount.toFixed(2)%> for the alpha
+						</div>
+						<div style="width:<%=ratio_beta*800%>px">
+							<div></div>
+							$<%=pledge.stages.beta.amount.toFixed(2)%> for the beta
+						</div>
+						<div style="width:<%=ratio_done*800%>px">
+							<div></div>
+							$<%=pledge.stages.done.amount.toFixed(2)%> when complete
+						</div>
+					</div>
+				</div>
+
+				<form style="display:none" id="cancel_pledge_form" action="/pledge/cancel/<%=pledge._id%>" method="POST">
+					<br><br>
+					Because many people use <i>shared</i> bitcoin wallets, (Coinbase, Shared Send, etc...)
+					I can't just send your bitcoin back to whatever address it came from.
+					<br><br>
+					Please specify the bitcoin address I should send your refund to:
+					<br>
+					<input style='width:100%; border:1px solid #bbb; font-size:20px; padding:5px' name="bitcoin_address"></input>
+					<br><br>
+					Please double check your address!
+				</form>
+
+				<%if(claimed==total){%>
+					Many thanks, your progress pledge has been completed!
+				<%}else{%>
+					<div class="button" id="cancel_pledge">CANCEL PLEDGE</div>
+				<%}%>
+
+			</div>
+			
+			<script>
+			var CLAIMED_RATIO = <%=(claimed/total)%>;
+			var PAYMENT_METHOD = "<%=pledge.payment.method%>";
+			</script>
+			<script src="/js/pledge_view.js"></script>
+
+
+		<%}else{%>
+
+			<div id="content">
+				Your pledge has been canceled. No further action is required.
+			</div>
+
+		<%}%>
+
+	</body>
+</html>
