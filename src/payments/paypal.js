@@ -141,27 +141,29 @@ module.exports = {
         refundAmount += s.alpha.claimed ? 0 : s.alpha.amount;
         refundAmount += s.beta.claimed ? 0 : s.beta.amount;
         refundAmount += s.done.claimed ? 0 : s.done.amount;
+        refundAmount = refundAmount.toFixed(2);
 
         // The sale ID
-        var saleID = pledge.payment.data.txn_id;
+        var saleID = pledge.payment.data.transactions[0].related_resources[0].sale.id;
 
         // Partial refund
-        request.post({
-            url: "https://api.sandbox.paypal.com/v1/payments/sale/"+saleID+"/refund",
-            json:{
-                "amount": {
-                    "total": refundAmount,
-                    "currency": "USD"
+        Q.fcall(_getOAuthToken).then(function(accessToken){
+            request.post({
+                url: PAYPAL_ENDPOINT+"/v1/payments/sale/"+saleID+"/refund",
+                headers: {
+                    'Authorization': 'Bearer '+accessToken
+                },
+                json: {
+                    "amount": {
+                        "total": refundAmount,
+                        "currency": "USD"
+                    }
                 }
-            }
-        },function(error,response,body){
-            console.log(error);
-            console.log(response);
-            console.log(body);
-            if(error){
-                return;
-            }
-            deferred.resolve(body);
+            },function(error,response,body){
+                console.log(body);
+                if(body.state!="completed") return;
+                deferred.resolve(body);
+            })
         });
 
         // Promise it'll be refunded
