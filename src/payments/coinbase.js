@@ -101,7 +101,7 @@ module.exports = {
                         res.send(
                             "Woops! Either the servers are still proceessing your pledge, "+
                             "or I messed up the code. Probably both. Please check back later, "+
-                            "check your email, and shoot me a message at nick@ncase.me "+
+                            "check your email, and shoot me a message at "+process.env.REPLY_TO_EMAIL+" "+
                             "if shenanigans persist. Thank you!"
                         );
                     }

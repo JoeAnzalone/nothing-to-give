@@ -11,7 +11,7 @@ var Email = {
     sendPledgeCreatedEmail: function(pledge){
         return Email.sendEmail({            
             to: pledge.backer.email,
-            from: 'nick@ncase.me',
+            from: process.env.REPLY_TO_EMAIL,
             subject: 'Thank you for backing Nothing To Hide',
             text: 'Your progress pledge page: '+DOMAIN_NAME+'/pledge/'+pledge._id
         });
@@ -20,7 +20,7 @@ var Email = {
     sendPledgeClaimedEmail: function(pledge){
 		return Email.sendEmail({
             to: pledge.backer.email,
-            from: 'nick@ncase.me',
+            from: process.env.REPLY_TO_EMAIL,
             subject: 'Part of your Progress Pledge has been claimed.',
             text: 'The upfront stage of your pledge has been claimed!\n\n'+
                 'Your card has been charged $'+pledge.stages.demo.amount.toFixed(2)+'\n\n'+

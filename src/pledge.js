@@ -42,6 +42,12 @@ module.exports = {
                     if(err || results.length==0) { return console.error(err); }
                     var pledge = results[0];
 
+                    // If already cancelled, then no
+                    if(pledge.cancelled){
+                        res.send("pledge already cancelled");
+                        return db.close();
+                    }
+
                     // Pledge refund with that processor
                     var paymentClass = require('./payments/'+pledge.payment.method);
                     paymentClass.refundPledge(pledge,req.body).then(function(){

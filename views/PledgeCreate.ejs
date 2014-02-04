@@ -7,6 +7,7 @@
 
 		<div id="form">
 
+			<!-- THE PROGRESS PLEDGE FORM -->
 			<form id="progress_pledge" method="POST">
 
 				<!-- BACKER INFORMATION -->
@@ -57,23 +58,20 @@
 
 				<div style="overflow:hidden">
 					<div class="button" id="credit_card">Credit Card</div>
-					<div class="button" style="display:none">PayPal</div>
+					<div class="button" id="paypal">PayPal</div>
 					<div class="button" id="bitcoin">Bitcoin</div>
-				</div>
-				<div style="font-size:15px">
-					<br>
-					use the test credit card:<br>
-					card: 4242 4242 4242 4242<br>
-					expires: 12/34<br>
-					cvc: 123<br>
 				</div>
 
 			</form>
 		</div>
-
 	</body>
 </html>
 
-<script>var STRIPE_PUBLIC_KEY = "<%=STRIPE_PUBLIC_KEY%>";</script>
+<script>
+var DOMAIN_NAME = "<%=DOMAIN_NAME%>";
+var PAYPAL_API = "<%=PAYPAL_API%>";
+var PAYPAL_EMAIL = "<%=PAYPAL_EMAIL%>";
+var STRIPE_PUBLIC_KEY = "<%=STRIPE_PUBLIC_KEY%>";
+</script>
 <script src="https://checkout.stripe.com/checkout.js"></script>
 <script src="/js/pledge_create.js"></script>
