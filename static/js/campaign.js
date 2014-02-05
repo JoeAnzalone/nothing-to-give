@@ -146,6 +146,8 @@ function createSplash(){
 		}
 
 		// TODO - Only draw video if IN SIGHT.
+		RAF(draw);
+		return;
 
 		// Redraw layer
 		//drawLayer();

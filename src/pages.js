@@ -1,4 +1,6 @@
-var Campaign = require("./campaign");
+var mongo = require('mongodb').MongoClient,
+    ObjectID = require('mongodb').ObjectID,
+    MONGO_URI = process.env.MONGO_URI;
 
 module.exports = {
 
@@ -6,21 +8,28 @@ module.exports = {
 
     	// Homepage
         app.get("/",function(req,res){
-        	Campaign.getStats().done(function(campaign){
-        		res.render("Campaign.ejs",{
-                    campaign: campaign
+            mongo.connect(MONGO_URI, function(err, db) {
+                if(err){ return console.error(err); }
+                db.collection('pledges').find({cancelled:false}).toArray(function(err,pledges){
+                    if(err) { return console.error(err); }
+                    db.close();
+                
+                    res.render("Campaign.ejs",{
+                        pledges: pledges,
+                        campaign: {
+                            goal: 40000 // Hard coded
+                        }
+                    });
+
                 });
-        	});
+            });
         });
 
         // Pledge Page
         app.get("/pledge",function(req,res){
-        	Campaign.getStats().done(function(campaign){
-        		res.render("PledgeCreate.ejs",{
-                    STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY,
-                    campaign: campaign
-                });
-        	});
+    		res.render("PledgeCreate.ejs",{
+                STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY
+            });
         });
 
     }
