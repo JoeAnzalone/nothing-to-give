@@ -133,6 +133,8 @@ function createSplash(){
 	var time = 0;
 	draw = function(){
 
+		// TODO - Only draw if IN SIGHT.
+
 		// Redraw layer
 		drawLayer();
 
