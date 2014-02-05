@@ -17,10 +17,10 @@ var READY_TO_PLAY = false;
 //window.onload = function(){
 
 // Loads the IFrame Player API code asynchronously.
-var tag = document.createElement('script');
+/*var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);*/
 
 //};
 // Creates an <iframe> (and YouTube player) after the API code downloads.
@@ -131,15 +131,26 @@ function createSplash(){
 	// Parallax
 	var RAF = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
 	var time = 0;
+	var thumbnails = document.querySelectorAll(".project_info > div > #thumbnail");
 	draw = function(){
 
-		// TODO - Only draw if IN SIGHT.
+		// Scroll Top, for parallax
+		var scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+
+		// Moving the parallax for all content thumbnails
+		for(var i=0;i<thumbnails.length;i++){
+			var thumbnail = thumbnails[i];
+			var offset = thumbnail.offsetTop + thumbnail.parentNode.offsetTop;
+			var y = (scrollTop-offset)*0.3;
+			thumbnail.style.backgroundPosition = "0 "+y+"px";
+		}
+
+		// TODO - Only draw video if IN SIGHT.
 
 		// Redraw layer
-		drawLayer();
+		//drawLayer();
 
 		// Draw recursively
-		var scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
 		var offset = scrollTop*0.5*0.4 - 200;
 		ctx.clearRect(0,0,800,350);
 		ctx.translate(0,offset);
@@ -159,9 +170,10 @@ function createSplash(){
 		ctx.translate(0,-offset);
 
 		// RAF
-		//if(!STOP_DRAWING) RAF(draw);
+		if(!STOP_DRAWING) RAF(draw);
 
 	};
+	drawLayer();
 	draw();
 
 

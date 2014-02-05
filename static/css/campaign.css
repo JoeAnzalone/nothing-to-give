@@ -136,13 +136,11 @@ body{
 	width:400px; height:100%;
 	position: absolute;
 	overflow: hidden;
+	background-repeat: no-repeat;
+	background-color: #000;
 }
 .project_info > div:nth-child(odd) > #thumbnail{ left:0; }
 .project_info > div:nth-child(even) > #thumbnail{ right:0; }
-.project_info > div > #thumbnail > div{
-	width:400px; height:400px;
-	position: absolute;
-}
 
 /******************/
 /**** PLEDGING ****/
