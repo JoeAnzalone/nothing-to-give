@@ -157,7 +157,7 @@ function createSplash(){
 		ctx.translate(0,-offset);
 
 		// RAF
-		if(!STOP_DRAWING) RAF(draw);
+		//if(!STOP_DRAWING) RAF(draw);
 
 	};
 	draw();
