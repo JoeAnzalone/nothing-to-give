@@ -7,17 +7,26 @@ var amount = {
 	beta: 0,
 	done: 0
 };
+
+// Pledge totals
 for(var i=0;i<pledges.length;i++){
-	var s = pledges[i].stages;
+	var pledge = pledges[i];
+	var s = pledge.stages;
+
 	amount.demo += s.demo.amount;
-	total += s.demo.amount;
 	amount.alpha += s.alpha.amount;
-	total += s.alpha.amount;
 	amount.beta += s.beta.amount;
-	total += s.beta.amount;
 	amount.done += s.done.amount;
-	total += s.done.amount;
+	
+	pledge.total = s.demo.amount + s.alpha.amount + s.beta.amount + s.done.amount;
+	total += pledge.total;
 }
+
+// Pledge sorting
+pledges = pledges.sort(function(a,b){
+	return(b.total-a.total);
+});
+
 %>
 
 <!DOCTYPE html>
@@ -138,6 +147,17 @@ for(var i=0;i<pledges.length;i++){
 			<a href="/pledge" style="text-decoration:none;display:block;width:400px;margin:0 auto">
 				<div class="pledge_button">BACK THIS PROJECT</div>
 			</a>
+
+			<div style="width:300px; margin:0 auto; color:#fff; letter-spacing:2px">
+				<ol>
+					<%
+					for(var i=0;i<pledges.length;i++){
+						var pledge=pledges[i];
+					%>
+						<li><%=pledge.backer.name%> - $<%=pledge.total.toFixed(2)%></li>
+					<%}%>
+				</ol>
+			</div>
 
 		</div>
 
