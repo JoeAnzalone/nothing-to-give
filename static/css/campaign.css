@@ -149,6 +149,9 @@ body{
 	overflow: hidden;
 	font-weight: 100;
 }
+.project_info > div > #blurb a{
+	color: #cc2727;
+}
 .project_info > div > #blurb > div.title{
 	font-size:25px;
 	margin-bottom: 10px;
