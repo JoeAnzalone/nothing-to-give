@@ -25,6 +25,14 @@ module.exports = {
             });
         });
 
+        // Just the campaign (test purposes)
+        app.get("/campaign",function(req,res){
+            res.render("Campaign.ejs",{
+                pledges: [],
+                campaign:{ goal:0 }
+            });
+        });
+
         // Pledge Page
         app.get("/pledge",function(req,res){
     		res.render("PledgeCreate.ejs",{

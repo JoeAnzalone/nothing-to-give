@@ -146,11 +146,9 @@ function createSplash(){
 		}
 
 		// TODO - Only draw video if IN SIGHT.
-		RAF(draw);
-		return;
 
 		// Redraw layer
-		//drawLayer();
+		drawLayer();
 
 		// Draw recursively
 		var offset = scrollTop*0.5*0.4 - 200;
