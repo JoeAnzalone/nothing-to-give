@@ -141,7 +141,7 @@ function createSplash(){
 		for(var i=0;i<thumbnails.length;i++){
 			var thumbnail = thumbnails[i];
 			var offset = thumbnail.offsetTop + thumbnail.parentNode.offsetTop;
-			var y = (scrollTop-offset)*0.3;
+			var y = (scrollTop-offset)*0.2 - 25;
 			thumbnail.style.backgroundPosition = "0 "+y+"px";
 		}
 
