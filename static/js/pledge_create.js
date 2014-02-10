@@ -1,5 +1,27 @@
 var form = document.querySelector("#progress_pledge");
 
+///////////////////
+// VALIDATE FORM //
+///////////////////
+
+var pledge_total = document.getElementById("pledge_total");
+pledge_total.onchange = function(){
+	// Integer >= 2
+	var num = parseInt(pledge_total.value);
+	if(num<2) num=2;
+	if(isNaN(num)) num=2;
+	pledge_total.value = num;
+};
+
+function checkValidity(){
+	var emailValid = document.getElementsByName("backer_email")[0].checkValidity();
+	if(!emailValid){
+		alert("Email address given is invalid!");
+		return false;
+	}
+	return true;
+}
+
 ////////////
 // STRIPE //
 ////////////
@@ -22,6 +44,8 @@ var handler = StripeCheckout.configure({
 });
 document.getElementById('credit_card').addEventListener('click', function(e) {
 
+	if(!checkValidity()) return;
+
 	var backer_email = document.getElementsByName("backer_email")[0].value;
 
 	// Open Checkout with further options
@@ -41,6 +65,7 @@ document.getElementById('credit_card').addEventListener('click', function(e) {
 //////////////
 
 document.getElementById('bitcoin').addEventListener('click', function(e) {
+	if(!checkValidity()) return;
 	form.action = "/pay/coinbase";
 	form.submit();
 });
@@ -50,6 +75,7 @@ document.getElementById('bitcoin').addEventListener('click', function(e) {
 ////////////
 
 document.getElementById('paypal').addEventListener('click', function(e) {
+	if(!checkValidity()) return;
 	form.action = "/pay/paypal";
 	form.submit();
 });

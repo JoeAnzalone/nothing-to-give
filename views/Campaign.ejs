@@ -33,6 +33,24 @@ pledges = pledges.sort(function(a,b){
 <html>
 	<head>
 		<title>Nothing To Hide: an anti-stealth game where you are your own watchdog</title>
+
+		<meta name="description" content="Nothing To Hide: an anti-stealth game where you are your own watchdog.">
+ 
+		<meta property="og:title" content="Nothing To Hide">
+		<meta property="og:description" content="An anti-stealth game where you are your own watchdog.">
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="http://back.nothingtohide.cc">
+		<meta property="og:image" content="http://back.nothingtohide.cc/thumbs/thumb.png">
+		<meta property="og:site_name" content="NothingToHide.cc">
+		 
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@ncasenmare">
+		<meta name="twitter:creator" content="@ncasenmare">
+		<meta name="twitter:title" content="Nothing To Hide">
+		<meta name="twitter:description" content="An anti-stealth game where you are your own watchdog.">
+		<meta name="twitter:image" content="http://back.nothingtohide.cc/thumbs/thumb.png">
+
+		<link rel="icon" type="image/ico" href="/favicon.ico"/>
 		<link href='/css/campaign.css' rel='stylesheet' type='text/css'>
 	</head>
 	<body>
@@ -268,14 +286,40 @@ pledges = pledges.sort(function(a,b){
 			</div>
 		</div>
 
-		<!-- Big Splash Footer -->
-		<!--div id="footer">
-		</div-->
+		<!-- Social Minus Spying -->
+		<style>
+		#social_minus_spying{
+			position: fixed;
+			width:200px;
+			height:103px;
+			top:230px;
+			left:-webkit-calc(50% - 630px);
+			left:-moz-calc(50% - 630px);
+			left:-ms-calc(50% - 630px);
+			left:-o-calc(50% - 630px);
+			left:calc(50% - 630px);
+		}
+		#social_minus_spying > div{
+			position: absolute;
+			right:0;
+		}
+		#ss_tweet{
+			top:0;
+		}
+		#ss_share{
+			bottom:0;
+		}
+		</style>
+		<div id="social_minus_spying">
+			<div id="ss_tweet" class="s-s" data-type="twitter" data-label="tweet"></div>
+			<div id="ss_share" class="s-s" data-type="facebook" data-label="share"></div>
+		</div>
 
 	</body>
 </html>
 
 <!-- Crucial campaign code -->
+<script src="/js/S-S.js"></script>
 <script src="/js/campaign.js"></script>
 
 <!-- begin olark code -->

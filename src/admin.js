@@ -22,7 +22,7 @@ module.exports = {
             
             mongo.connect(MONGO_URI, function(err, db) {
                 if(err) { return console.error(err); }
-                db.collection('pledges').find().sort({_id:-1}).toArray(function(err,pledges){
+                db.collection('pledges').find().sort({timestamp:-1}).toArray(function(err,pledges){
                     if(err) return console.error(err);
                     res.render("AdminDashboard.ejs",{
                         pledges: pledges

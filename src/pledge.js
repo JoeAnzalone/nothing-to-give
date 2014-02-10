@@ -84,6 +84,7 @@ module.exports = {
         // Pledge to save
         var pledge = {
             _id: new ObjectID(randomID),
+            timestamp: new ObjectID(),
             cancelled: false
         };
 
