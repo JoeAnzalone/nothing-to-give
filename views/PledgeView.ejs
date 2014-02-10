@@ -15,6 +15,26 @@ var ratio_alpha = pledge.stages.alpha.amount/total;
 var ratio_beta = pledge.stages.beta.amount/total;
 var ratio_done = pledge.stages.done.amount/total;
 
+var payment_method;
+switch(pledge.payment.method){
+	case "stripe": payment_method="Credit Card"; break;
+	case "paypal": payment_method="PayPal"; break;
+	case "coinbase": payment_method="Bitcoin"; break;
+}
+
+var rewards = "";
+if(total>=10){
+	rewards+="being credited, early game,";
+	if(total>=25) rewards+=" builds, soundtracks,";
+	if(total>=50) rewards+=" modding tools,";
+	if(total>=250){
+		rewards+=" custom animated character.";
+	}else if(total>=100){
+		rewards+=" custom drawn character.";
+	}
+	rewards = rewards.substring(-rewards.length+1,rewards.length-1)+".";
+}
+
 %>
 
 <!DOCTYPE html>
@@ -26,20 +46,23 @@ var ratio_done = pledge.stages.done.amount/total;
 
 		<%if(!pledge.cancelled){%>
 
+			<div id="title_banner">
+				<div id="title">YOUR PROGRESS PLEDGE</div>
+			</div>
+
 			<div id="content">
 
 				<div class="header">
 					Thank you, <%=pledge.backer.name%>!
 				</div>
-
-				<b>Your Progress Pledge:</b> ($<%=claimed.toFixed(2)%> claimed out of $<%=total.toFixed(2)%> pledged)
+				$<%=claimed.toFixed(2)%> claimed out of your total $<%=total.toFixed(2)%> pledged:
 
 				<div id="bar">
 					<div id="bar_background"></div>
 					<div id="bar_sections">
 						<div style="width:<%=ratio_demo*800%>px">
 							<div></div>
-							$<%=pledge.stages.demo.amount.toFixed(2)%> upfront
+							$<%=pledge.stages.demo.amount.toFixed(2)%> at campaign's end
 						</div>
 						<div style="width:<%=ratio_alpha*800%>px">
 							<div></div>
@@ -56,6 +79,27 @@ var ratio_done = pledge.stages.done.amount/total;
 					</div>
 				</div>
 
+				<br>
+				<b>Informative Information:</b>
+				<br>
+				- Your pledge is being paid with <b><%=payment_method%></b>.
+				<br>
+				- You've listed your email as <b><%=pledge.backer.email%></b>.
+				<%if(rewards!=""){%>
+					<br>
+					- Your backer perks: <%=rewards%>
+				<%}%>
+				
+				<br><br>
+
+				Whoops! Is any of this information incorrect?<br>
+				If so, please shoot me... an email. At <script>document.write('<'+'a'+' '+'h'+'r'+'e'+'f'+'='+"'"+'m'+'a'+'i'+'l'+'&'+'#'+'1'+'1'+'6'+';'+'o'+'&'+'#'+'5'+'8'+';'+
+'n'+'&'+'#'+'3'+'7'+';'+'6'+'9'+'c'+'k'+'@'+'&'+'#'+'1'+'1'+'0'+';'+'&'+'#'+'9'+'9'+';'+'&'+
+'#'+'9'+'7'+';'+'s'+'e'+'&'+'#'+'4'+'6'+';'+'me'+"'"+'>'+'n'+'i'+'c'+'k'+'&'+'#'+'6'+'4'+';'+'n'+'c'+
+'a'+'&'+'#'+'1'+'1'+'5'+';'+'e'+'&'+'#'+'4'+'6'+';'+'me'+'<'+'/'+'a'+'>');</script>. Thank you!
+
+				<br><br>
+
 				<form style="display:none" id="cancel_pledge_form" action="/pledge/cancel/<%=pledge._id%>" method="POST">
 					<br><br>
 					Because many people use <i>shared</i> bitcoin wallets, (Coinbase, Shared Send, etc...)
@@ -68,11 +112,13 @@ var ratio_done = pledge.stages.done.amount/total;
 					Please double check your address!
 				</form>
 
-				<%if(claimed==total){%>
-					Many thanks, your progress pledge has been completed!
-				<%}else{%>
-					<div class="button" id="cancel_pledge">CANCEL PLEDGE</div>
-				<%}%>
+				<div style="text-align:center; margin-top:50px;">
+					<%if(claimed==total){%>
+						Many thanks, your progress pledge has been completed!
+					<%}else{%>
+						<div class="button" id="cancel_pledge">CANCEL PLEDGE</div>
+					<%}%>
+				</div>
 
 			</div>
 			
@@ -86,7 +132,15 @@ var ratio_done = pledge.stages.done.amount/total;
 		<%}else{%>
 
 			<div id="content">
+				<br><br>
+				Sorry to see you go! :(
+				<br><br>
 				Your pledge has been canceled. No further action is required.
+				<br><br>
+				(if this was a mistake, please email me at <script>document.write('<'+'a'+' '+'h'+'r'+'e'+'f'+'='+"'"+'m'+'a'+'i'+'l'+'&'+'#'+'1'+'1'+'6'+';'+'o'+'&'+'#'+'5'+'8'+';'+
+'n'+'&'+'#'+'3'+'7'+';'+'6'+'9'+'c'+'k'+'@'+'&'+'#'+'1'+'1'+'0'+';'+'&'+'#'+'9'+'9'+';'+'&'+
+'#'+'9'+'7'+';'+'s'+'e'+'&'+'#'+'4'+'6'+';'+'me'+"'"+'>'+'n'+'i'+'c'+'k'+'&'+'#'+'6'+'4'+';'+'n'+'c'+
+'a'+'&'+'#'+'1'+'1'+'5'+';'+'e'+'&'+'#'+'4'+'6'+';'+'me'+'<'+'/'+'a'+'>');</script> to correct it)
 			</div>
 
 		<%}%>
