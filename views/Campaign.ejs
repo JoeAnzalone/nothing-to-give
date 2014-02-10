@@ -247,12 +247,12 @@ pledges = pledges.sort(function(a,b){
 					<div style="color:#888; text-align: center; font-size: 40px; line-height: 20px; position: relative; top: 15px;">
 						TOP BACKERS
 					</div>
-					<ol>
+					<ol style="">
 						<%
 						for(var i=0;i<10&&i<pledges.length;i++){
 							var pledge=pledges[i];
 						%>
-							<li><%=pledge.backer.name ? pledge.backer.name : "[anonymous]"%> - $<%=pledge.total.toFixed(2)%></li>
+							<li><%=pledge.backer.name ? pledge.backer.name : "anonymous"%> - $<%=pledge.total.toFixed(2)%></li>
 						<%}%>
 					</ol>
 					<div style="position: relative; top:-20px; text-align:center; color:#555; font-size:25px">
