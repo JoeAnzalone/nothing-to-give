@@ -1,8 +1,12 @@
 // Import libraries
 var Q = require("q");
+var crypto = require('crypto');
 var mongo = require('mongodb').MongoClient,
     ObjectID = require('mongodb').ObjectID,
     MONGO_URI = process.env.MONGO_URI;
+
+// Env Vars
+var CRYPTO_SALT = process.env.CRYPTO_SALT;
 
 module.exports = {
 
@@ -74,9 +78,12 @@ module.exports = {
 
     create: function(config){
 
+        // Random hex for ID, to prevent guessing.
+        var randomID = crypto.randomBytes(12).toString('hex');
+
         // Pledge to save
         var pledge = {
-            _id: new ObjectID(),
+            _id: new ObjectID(randomID),
             cancelled: false
         };
 

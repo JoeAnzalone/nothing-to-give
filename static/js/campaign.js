@@ -145,31 +145,35 @@ function createSplash(){
 			thumbnail.style.backgroundPosition = "0 "+y+"px";
 		}
 
-		// TODO - Only draw video if IN SIGHT.
-		RAF(draw);
-		return;
-
 		// Redraw layer
-		drawLayer();
+		if(DIRTY_MOUSE){
+			drawLayer();
+		}
 
 		// Draw recursively
-		var offset = scrollTop*0.5*0.4 - 200;
-		ctx.clearRect(0,0,800,350);
-		ctx.translate(0,offset);
-		for(var depth=10;depth>=0;depth--){
-			
-			var scale = Math.pow(0.7,depth);
-			var x = 400;
-			var y = 375 + scrollTop*0.5;
+		if(DIRTY_MOUSE || DIRTY_SCROLL){
+			var offset = scrollTop*0.5*0.4 - 200;
+			ctx.clearRect(0,0,800,350);
+			ctx.translate(0,offset);
+			for(var depth=10;depth>=0;depth--){
+				
+				var scale = Math.pow(0.7,depth);
+				var x = 400;
+				var y = 375 + scrollTop*0.5;
 
-			ctx.save();
-			ctx.translate(x,y);
-			ctx.scale(scale,scale);
-			ctx.drawImage(layerCanvas,-x,-y,800,750);
-			ctx.restore();
+				ctx.save();
+				ctx.translate(x,y);
+				ctx.scale(scale,scale);
+				ctx.drawImage(layerCanvas,-x,-y,800,750);
+				ctx.restore();
 
+			}
+			ctx.translate(0,-offset);
 		}
-		ctx.translate(0,-offset);
+
+		// NOT DIRTY NO MORE
+		DIRTY_MOUSE = false;
+		DIRTY_SCROLL = false;
 
 		// RAF
 		if(!STOP_DRAWING) RAF(draw);
@@ -191,5 +195,51 @@ var container = document.querySelector("#video_container");
 var onMouseMove = function(event){
 	Mouse.x = event.clientX - container.offsetLeft - container.parentNode.offsetLeft;
 	Mouse.y = event.clientY - container.offsetTop - container.parentNode.offsetTop;
+	DIRTY_MOUSE = true;
 };
 window.onmousemove = onMouseMove;
+
+// DIRTY META
+var DIRTY_MOUSE = true;
+var DIRTY_SCROLL = true;
+window.onscroll = function(){
+	DIRTY_MOUSE = true;
+	DIRTY_SCROLL = true;
+};
+
+
+//////////
+// COUNTDOWN
+///////////
+
+(function(){
+
+var _second = 1000;
+var _minute = _second * 60;
+var _hour = _minute * 60;
+var _day = _hour * 24;
+function toDoubleDigits(num){
+var s = "00"+num;
+return s.substr(s.length-2);
+}
+
+var end = new Date( window.DEADLINE ? window.DEADLINE : '03/12/2014' );
+var countdown = document.getElementById("countdown");
+function tick(){
+
+var now = new Date();
+var distance = end-now;
+if(distance<0) distance=0;
+
+var days = Math.floor(distance / _day);
+var hours = Math.floor((distance % _day) / _hour);
+var minutes = Math.floor((distance % _hour) / _minute);
+var seconds = Math.floor((distance % _minute) / _second);
+
+countdown.innerHTML = toDoubleDigits(days)+" days, "+toDoubleDigits(hours)+" hours, "+toDoubleDigits(minutes)+" minutes, "+toDoubleDigits(seconds)+" seconds";
+
+}
+setInterval(tick,1000);
+tick();
+
+})();

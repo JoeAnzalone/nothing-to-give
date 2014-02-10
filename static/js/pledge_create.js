@@ -11,6 +11,7 @@ var handler = StripeCheckout.configure({
 
 		var input = document.createElement("input");
 		input.name = "stripeToken";
+		input.type = "hidden";
 		input.value = token.id;
 		form.appendChild(input);
 

@@ -32,6 +32,7 @@ pledges = pledges.sort(function(a,b){
 <!DOCTYPE html>
 <html>
 	<head>
+		<title>Nothing To Hide: an anti-stealth game where you are your own watchdog</title>
 		<link href='/css/campaign.css' rel='stylesheet' type='text/css'>
 	</head>
 	<body>
@@ -46,8 +47,8 @@ pledges = pledges.sort(function(a,b){
 			<div id="video_banner">
 				<div id="video_container">
 					<canvas id="video_meta" width="800" height="350"></canvas>
-					<div id="video_play" onclick="playVideo()"></div>
-					<div id="video_trailer"></div>
+					<!--div id="video_play" onclick="playVideo()"></div>
+					<div id="video_trailer"></div-->
 				</div>
 			</div>
 
@@ -61,6 +62,14 @@ pledges = pledges.sort(function(a,b){
 			<a href="/pledge" style="text-decoration:none;display:block;width:400px;margin:0 auto">
 				<div class="pledge_button">BACK THIS PROJECT</div>
 			</a>
+			<div style="font-size:17px; font-family:sans-serif; text-align:center; position:relative; top:-10px; color:#777">
+				ends in <span id="countdown"># days, # hours, # minutes, ## seconds</span>
+			</div>
+			<div id="misc_links">
+				<a href="http://demo.nothingtohide.cc">play browser demo</a><!--
+				|
+				<a href="/presskit">presskit</a>-->
+			</div>
 
 		</div>
 
@@ -181,6 +190,7 @@ pledges = pledges.sort(function(a,b){
 				</div>
 			</div>
 		</div>
+		<br><br>
 
 		<!-- Pledge it, yo! -->
 		<div id="pledging">
@@ -189,40 +199,51 @@ pledges = pledges.sort(function(a,b){
 				<div class="pledge_button">BACK THIS PROJECT</div>
 			</a>
 
-			<div style="width:630px; margin:0 auto; position: relative;">
+			<div style="width:730px; margin:0 auto; position: relative; top:10px">
 
-				<div style="width:300px; position:absolute; left:0; color:#fff; letter-spacing:2px">
+				<div style="width:400px; position:absolute; left:0; color:#fff; letter-spacing:2px">
 					<div style="color:#888; text-align: center; font-size: 40px; line-height: 20px; position: relative; top: 15px;">
 						BACKER PERKS
 					</div>
-					<div style="position: relative; top: 30px;">
-						$25+ Credited in the game & all early builds!
-						$50+ ... 
-						$100+ Custom drawn character, drawn in Nothing To Hide's art style. (+ credit)
-						$250+ Custom playable character, in Nothing To Hide's art style. (+ credit)
+					<div id="rewards" style="position: relative; top: 30px;">
+						<div>
+							<div id="reward_amount" style="font-size:40px">$10+</div>
+							<div id="reward_desc">Get the final game before anyone else, <i>and</i> be credited in the game</div>
+						</div>
+						<div>
+							<div id="reward_amount" style="font-size:40px">$25+</div>
+							<div id="reward_desc">Get early builds and soundtracks before anyone else</div>
+						</div>
+						<div>
+							<div id="reward_amount" style="font-size:40px">$50+</div>
+							<div id="reward_desc">Get early and final modding tools before anyone else</div>
+						</div>
+						<div>
+							<div id="reward_amount" style="height:45px; padding-top:25px">$100+</div>
+							<div id="reward_desc">Custom drawn character in Nothing To Hide's art style</div>
+						</div>
+						<div>
+							<div id="reward_amount" style="height:45px; padding-top:25px">$250+</div>
+							<div id="reward_desc">Custom animated character in Nothing To Hide's art style</div>
+						</div>
 					</div>
 				</div>
 
 				<div style="width:300px; position:absolute; right:0; color:#fff; letter-spacing:2px">
 					<div style="color:#888; text-align: center; font-size: 40px; line-height: 20px; position: relative; top: 15px;">
-						TOP 10 BACKERS
+						TOP BACKERS
 					</div>
 					<ol>
-						<%
-						for(var i=0;i<10;i++){
-							var pledge=pledges[i%pledges.length];
-						%>
-							<li><%=pledge.backer.name%> <span style="color:#888">- $<%=pledge.total.toFixed(2)%></span></li>
-						<%}%>
-						<!--
 						<%
 						for(var i=0;i<10&&i<pledges.length;i++){
 							var pledge=pledges[i];
 						%>
 							<li><%=pledge.backer.name%> - $<%=pledge.total.toFixed(2)%></li>
 						<%}%>
-						-->
 					</ol>
+					<div style="position: relative; top:-20px; text-align:center; color:#555; font-size:25px">
+						(<%=pledges.length%> backers total)
+					</div>
 				</div>
 
 			</div>
@@ -237,6 +258,12 @@ pledges = pledges.sort(function(a,b){
 			<!--div id="goodbye_bar"></div>
 			<div id="goodbye_bar_2"></div>
 			<div id="goodbye_bar_3"></div-->
+			<div style="font-family:sans-serif; font-weight:100; font-size:20px; line-height:25px; color:#555; margin-top:10px">
+				if anything goes wrong, please contact me at <script>document.write('<'+'a'+' '+'h'+'r'+'e'+'f'+'='+"'"+'m'+'a'+'i'+'l'+'&'+'#'+'1'+'1'+'6'+';'+'o'+'&'+'#'+'5'+'8'+';'+
+'n'+'&'+'#'+'3'+'7'+';'+'6'+'9'+'c'+'k'+'@'+'&'+'#'+'1'+'1'+'0'+';'+'&'+'#'+'9'+'9'+';'+'&'+
+'#'+'9'+'7'+';'+'s'+'e'+'&'+'#'+'4'+'6'+';'+'me'+"'"+'>'+'n'+'i'+'c'+'k'+'&'+'#'+'6'+'4'+';'+'n'+'c'+
+'a'+'&'+'#'+'1'+'1'+'5'+';'+'e'+'&'+'#'+'4'+'6'+';'+'me'+'<'+'/'+'a'+'>');</script><noscript>[Turn on JavaScript to see the email address]</noscript><br>thank you!
+			</div>
 		</div>
 
 		<!-- Big Splash Footer -->
