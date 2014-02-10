@@ -6,7 +6,7 @@ var form = document.querySelector("#progress_pledge");
 
 var handler = StripeCheckout.configure({
 	key: STRIPE_PUBLIC_KEY,
-	image: "http://placekitten.com/128/128",
+	image: "/img/icon.png",
 	token: function(token, args) {
 
 		var input = document.createElement("input");

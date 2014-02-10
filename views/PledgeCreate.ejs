@@ -5,6 +5,28 @@
 	</head>
 	<body>
 
+		<div id="title_banner">
+			<div id="title">SET YOUR PROGRESS PLEDGE</div>
+			<div id="subtitle">
+				Your pledge won't be claimed all in one go.
+				Rather, I only claim part of your pledge for each milestone I hit, like so:
+
+				<br><br>
+				25% claimed if this initial campaign succeeds (March 2014)
+				<br>
+				25% claimed when I reach the alpha version (estimate: June 2014)
+				<br>
+				25% claimed when I reach the beta version (estimate: Sep 2014)
+				<br>
+				25% claimed when the game is finished (estimate: Dec 2014)
+
+				<br><br>
+				You can cancel your pledge at any time.
+				Because I also update openly on my progress, I will be kept <i>transparent & accountable</i>.
+
+			</div>
+		</div>
+
 		<div id="form">
 
 			<!-- THE PROGRESS PLEDGE FORM -->
@@ -13,9 +35,11 @@
 				<!-- BACKER INFORMATION -->
 
 				<div class="header">
-					Hi! What's your name? (If you want to be credited in the leaderboard)
+					Hi there! What's your name?
 				</div>
-				<input type="text" name="backer_name" class="text_input" placeholder="Anonymous"></input>
+				<input type="text" name="backer_name" class="text_input" placeholder="Jane Doe / website.com / @twitter"></input>
+				<br>
+				<span>(optional. only if you want to be credited in the game and/or site)</span>
 				
 				<br><br>
 
@@ -24,43 +48,53 @@
 				</div>
 				<!--You will only be sent notifications if/when a part of your pledge is claimed.-->
 				<input type="email" name="backer_email" class="text_input" placeholder="your@email.com"></input>
+				<br>
+				<span>(never any spam. i'll only need your email to send notifications about your pledge)</span>
 				
-				<br><br><hr><br>
+				<br><br><!--hr><br-->
 
 				<!-- PLEDGE INFORMATION -->
 
 				<div class="header">
 					How much would you like to pledge in total?
 				</div>
-				$<input name="pledge_total" id="pledge_total" value="10.00" class="text_input" style="width:100px;"/>
-				($2 minimum, due to Stripe's minimum limit)
+				$<input name="pledge_total" id="pledge_total" value="10" class="text_input" style="width:50px;"/>
+				<span>($2 minimum, due to payment processor fees out of my control)</span>
 
-				<br><br>
+				<span style="display:none">
+					<br><br>
+					<div class="header">
+						How would you like to split up your Progress Pledge?
+					</div>
+					<input type="radio" name="pledge_split" value="quarter" checked> 25% upfront, 25% for alpha, 25% for beta, 25% for full game
+					<br>
+					<input type="radio" name="pledge_split" value="half"> 50% upfront, 50% for full game
+					<br>
+					<input type="radio" name="pledge_split" value="all"> 100% upfront
+				</span>
 
-				<div class="header">
-					How would you like to split up your Progress Pledge?
-				</div>
-				<input type="radio" name="pledge_split" value="quarter" checked> 25% upfront, 25% for alpha, 25% for beta, 25% for full game
-				<br>
-				<input type="radio" name="pledge_split" value="half"> 50% upfront, 50% for full game
-				<br>
-				<input type="radio" name="pledge_split" value="all"> 100% upfront
-
-				
-				<br><br><hr><br>
+				<br><br><!--hr><br-->
 
 				<!-- PAYMENT METHODS -->
 
 				<div class="header">
-					Alright alright alright, let's pledge this!
-					<br>(note: for paypal & bitcoin, funds must be held in escrow)
+					Finally, how would you like to pay, if/when your pledge is claimed?
 				</div>
 
-				<div style="overflow:hidden">
+				<div style="overflow:hidden; margin-bottom:10px;">
 					<div class="button" id="credit_card">Credit Card</div>
 					<div class="button" id="paypal">PayPal</div>
 					<div class="button" id="bitcoin">Bitcoin</div>
 				</div>
+
+				<span>
+					NOTE: Credit cards won't be charged until a part of your pledge is claimed.
+					However, paypal & bitcoin will have to held in escrow.
+					If you choose those, it'll ask you for the full amount upfront, but don't worry - 
+					you can cancel your pledge at any time, for any reason, and it'll automatically
+					refund the unclaimed parts of your pledge.
+					No questions asked.
+				</span>
 
 			</form>
 		</div>
