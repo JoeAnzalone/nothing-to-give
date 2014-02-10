@@ -9,10 +9,11 @@ module.exports = {
     	// Homepage
         app.get("/",function(req,res){
             mongo.connect(MONGO_URI, function(err, db) {
-                if(err){ return console.error(err); }
+                if(err){ db.close(); return console.error(err); }
                 db.collection('pledges').find({cancelled:false}).toArray(function(err,pledges){
-                    if(err) { return console.error(err); }
+                    
                     db.close();
+                    if(err) { return console.error(err); }
                 
                     res.render("Campaign.ejs",{
                         pledges: pledges,

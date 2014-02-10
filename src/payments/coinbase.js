@@ -87,11 +87,11 @@ module.exports = {
 
             var query = {"payment.data.order.id":req.query.order.id};
             mongo.connect(MONGO_URI,function(err,db){
-                if(err){ return console.error(err); }
+                if(err){ db.close(); return console.error(err); }
                 db.collection('pledges').find(query).toArray(function(err,results){
                     
-                    if(err){ return console.error(err); }
                     db.close();
+                    if(err){ return console.error(err); }
 
                     var pledge = results[0];
                     if(pledge){

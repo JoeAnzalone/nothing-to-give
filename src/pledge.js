@@ -19,14 +19,14 @@ module.exports = {
             var query = {_id:_id};
 
             mongo.connect(MONGO_URI, function(err, db) {
-                if(err){ return console.error(err); }
+                if(err){ db.close(); return console.error(err); }
                 db.collection('pledges').find(query).toArray(function(err,results){
+                    db.close();
                     if(err || results.length==0){ return res.send("no such pledge") }
                     var pledge = results[0];
                     res.render("PledgeView.ejs",{
                         pledge: pledge
                     });
-                    db.close();
                 });
             });
 
@@ -39,11 +39,11 @@ module.exports = {
             var query = {_id:_id};
 
             mongo.connect(MONGO_URI, function(err,db){
-                if(err){ return console.error(err); }
+                if(err){ db.close(); return console.error(err); }
 
                 // Find that pledge
                 db.collection('pledges').find(query).toArray(function(err,results){
-                    if(err || results.length==0) { return console.error(err); }
+                    if(err || results.length==0) { db.close(); return console.error(err); }
                     var pledge = results[0];
 
                     // If already cancelled, then no
@@ -60,8 +60,8 @@ module.exports = {
                         db.collection('pledges').update(
                             query, { $set:{"cancelled":true} },
                             function(err){
-                                if(err) deferred.reject(err);
                                 db.close();
+                                if(err) deferred.reject(err);
 
                                 // Redirect to your dead pledge
                                 res.redirect("/pledge/"+req.params.id);
@@ -126,12 +126,12 @@ module.exports = {
         // Promise to save this pledge
         var deferred = Q.defer();
         mongo.connect(MONGO_URI, function(err, db) {
-            if(err) { return deferred.reject(err); }
+            if(err) { db.close(); return deferred.reject(err); }
             // Insert new entry
             db.collection('pledges').insert(pledge,function(err,inserted){
+                db.close();
                 if(err) { return deferred.reject(err); }
                 deferred.resolve(pledge);
-                db.close();
             });
         });
         return deferred.promise;
