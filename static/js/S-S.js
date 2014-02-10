@@ -12,7 +12,7 @@ Created by Nicky Case (@ncasenmare). Attribution is always welcome, but not requ
 	window.SS_SOCIAL_API = {
 		twitter: {
 			template:
-				"<div onclick='window.SS_POPUP(\"https://twitter.com/share?url={{link}}&text={{text}}\",\"twitter\")'>"+
+				"<div onclick='window.SS_POPUP(\"https://twitter.com/share?url={{link}}&text={{text}}&via=ncasenmare\",\"twitter\")'>"+
 				"	<div id='ss_label'>{{label}}</div>"+
 				"	<div id='ss_count'>{{count}}</div>"+
 				"</div>",
