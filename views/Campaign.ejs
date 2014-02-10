@@ -189,15 +189,42 @@ pledges = pledges.sort(function(a,b){
 				<div class="pledge_button">BACK THIS PROJECT</div>
 			</a>
 
-			<div style="width:300px; margin:0 auto; color:#fff; letter-spacing:2px">
-				<ol>
-					<%
-					for(var i=0;i<pledges.length;i++){
-						var pledge=pledges[i];
-					%>
-						<li><%=pledge.backer.name%> - $<%=pledge.total.toFixed(2)%></li>
-					<%}%>
-				</ol>
+			<div style="width:630px; margin:0 auto; position: relative;">
+
+				<div style="width:300px; position:absolute; left:0; color:#fff; letter-spacing:2px">
+					<div style="color:#888; text-align: center; font-size: 40px; line-height: 20px; position: relative; top: 15px;">
+						BACKER PERKS
+					</div>
+					<div style="position: relative; top: 30px;">
+						$25+ Credited in the game & all early builds!
+						$50+ ... 
+						$100+ Custom drawn character, drawn in Nothing To Hide's art style. (+ credit)
+						$250+ Custom playable character, in Nothing To Hide's art style. (+ credit)
+					</div>
+				</div>
+
+				<div style="width:300px; position:absolute; right:0; color:#fff; letter-spacing:2px">
+					<div style="color:#888; text-align: center; font-size: 40px; line-height: 20px; position: relative; top: 15px;">
+						TOP 10 BACKERS
+					</div>
+					<ol>
+						<%
+						for(var i=0;i<10;i++){
+							var pledge=pledges[i%pledges.length];
+						%>
+							<li><%=pledge.backer.name%> <span style="color:#888">- $<%=pledge.total.toFixed(2)%></span></li>
+						<%}%>
+						<!--
+						<%
+						for(var i=0;i<10&&i<pledges.length;i++){
+							var pledge=pledges[i];
+						%>
+							<li><%=pledge.backer.name%> - $<%=pledge.total.toFixed(2)%></li>
+						<%}%>
+						-->
+					</ol>
+				</div>
+
 			</div>
 
 		</div>
@@ -207,14 +234,14 @@ pledges = pledges.sort(function(a,b){
 			Thanks for viewing this campaign!
 			<br>
 			After all, we're all viewing you. 
-			<div id="goodbye_bar"></div>
+			<!--div id="goodbye_bar"></div>
 			<div id="goodbye_bar_2"></div>
-			<div id="goodbye_bar_3"></div>
+			<div id="goodbye_bar_3"></div-->
 		</div>
 
 		<!-- Big Splash Footer -->
-		<div id="footer">
-		</div>
+		<!--div id="footer">
+		</div-->
 
 	</body>
 </html>

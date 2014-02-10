@@ -1,12 +1,8 @@
-@font-face {
-	font-family: 'Raleway';
-	src: url(/fonts/Raleway.woff) format('woff');
-}
-
 body {
 	margin: 0;
-	font-family: Raleway;
+	font-family: Helvetica, Arial, sans-serif;
 	font-size: 25px;
+	background: #eee;
 }
 #content {
 	width:960px; margin:50px auto;
