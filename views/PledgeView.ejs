@@ -53,7 +53,7 @@ if(total>=10){
 			<div id="content">
 
 				<div class="header">
-					Thank you, <%=pledge.backer.name%>!
+					Thank you, <%=pledge.backer.name ? pledge.backer.name : "[anonymous]"%>!
 				</div>
 				$<%=claimed.toFixed(2)%> claimed out of your total $<%=total.toFixed(2)%> pledged:
 
