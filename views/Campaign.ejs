@@ -77,7 +77,10 @@ pledges = pledges.sort(function(a,b){
 			</div>
 
 			<a href="/pledge" style="text-decoration:none;display:block;width:400px;margin:0 auto">
-				<div class="pledge_button">BACK THIS PROJECT</div>
+				<div class="pledge_button" style="height: 60px; padding:15px 0;">
+					BACK THIS PROJECT
+					<div style="font-size: 19px;position: relative;top: -4px; color:#660000">with credit card, paypal, or bitcoin</div>
+				</div>
 			</a>
 			<div style="font-size:17px; font-family:sans-serif; text-align:center; position:relative; top:-10px; color:#777">
 				ends in <span id="countdown"># days, # hours, # minutes, ## seconds</span>
@@ -87,13 +90,13 @@ pledges = pledges.sort(function(a,b){
 
 		<!-- LINKS TO STUFF -->
 		<div id="misc_links">
-			<a href="http://demo.nothingtohide.cc" style="text-decoration:none; letter-spacing:2px">
+			<a href="http://demo.nothingtohide.cc" style="display:block;width:302px;margin:0 auto; text-decoration:none; letter-spacing:2px">
 				<div class="misc_link">play web demo (HTML5)</div>
 			</a>
-			<a target="_blank" href="https://github.com/ncase/nothing-to-hide" style="text-decoration:none; letter-spacing:2.5px">
-				<div class="misc_link">download source code</div>
+			<a target="_blank" href="https://github.com/ncase/nothing-to-hide" style="display:block;width:302px;margin:0 auto; text-decoration:none; letter-spacing:3px">
+				<div class="misc_link">get open source code</div>
 			</a>
-			<a target="_blank" href="https://gist.github.com/ncase/8948278" style="text-decoration:none; letter-spacing:6px">
+			<a target="_blank" href="https://gist.github.com/ncase/8948278" style="display:block;width:302px;margin:0 auto; text-decoration:none; letter-spacing:6px">
 				<div class="misc_link">press & media kit</div>
 			</a>
 		</div>
@@ -150,7 +153,10 @@ pledges = pledges.sort(function(a,b){
 		<div id="pledging">
 
 			<a href="/pledge" style="text-decoration:none;display:block;width:400px;margin:0 auto">
-				<div class="pledge_button">BACK THIS PROJECT</div>
+				<div class="pledge_button" style="height: 60px; padding:15px 0;">
+					BACK THIS PROJECT
+					<div style="font-size: 19px;position: relative;top: -4px; color:#660000">with credit card, paypal, or bitcoin</div>
+				</div>
 			</a>
 
 			<div style="width:730px; margin:0 auto; position: relative; top:10px">
@@ -191,8 +197,16 @@ pledges = pledges.sort(function(a,b){
 						<%
 						for(var i=0;i<10&&i<pledges.length;i++){
 							var pledge=pledges[i];
+							var escapedName = escape(pledge.backer.name);
+							var name = escapedName ? escapedName : "<span style='color:#999'>[anonymous]</span>";
+							
+							name = name.replace(/(\w+\.\w+)/,"<a target='_blank' href='http://$1'>$1</a>"); // Website
+							name = name.replace(/\@(\w+)/,"<a target='_blank' href='https://twitter.com/$1'>@$1</a>"); // Twitter
 						%>
-							<li><%=pledge.backer.name ? pledge.backer.name : "anonymous"%> - $<%=pledge.total%></li>
+							<li>
+								<%-name%>
+								<span style='color:#999'> - $<%=pledge.total%></span>
+							</li>
 						<%}%>
 					</ol>
 					<div style="position: relative; top:-20px; text-align:center; color:#555; font-size:25px">
