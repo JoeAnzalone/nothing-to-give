@@ -132,6 +132,7 @@ function createSplash(){
 	var RAF = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
 	var time = 0;
 	var thumbnails = document.querySelectorAll(".project_info > div > #thumbnail");
+	var misc_links = document.getElementById("misc_links");
 	draw = function(){
 
 		// Scroll Top, for parallax
@@ -144,6 +145,11 @@ function createSplash(){
 			var y = (scrollTop-offset)*0.2 - 25;
 			thumbnail.style.backgroundPosition = "0 "+y+"px";
 		}
+
+		// Misc Links Parallax
+		var offset = misc_links.offsetTop + misc_links.parentNode.offsetTop;
+		var y = (scrollTop-offset)*0.5;
+		misc_links.style.backgroundPosition = "50% "+y+"px";
 
 		// Redraw layer
 		if(DIRTY_MOUSE){
