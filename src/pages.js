@@ -18,7 +18,7 @@ module.exports = {
                     res.render("Campaign.ejs",{
                         pledges: pledges,
                         campaign: {
-                            goal: 30000 // Hard coded
+                            goal: 40000 // Hard coded
                         }
                     });
 
