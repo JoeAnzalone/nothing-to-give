@@ -141,7 +141,7 @@ pledges = pledges.sort(function(a,b){
 					<a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">Creative Commons</a>,
 					<a href="http://demandprogress.org/" target="_blank">Demand Progress</a>,
 					and the
-					<a href="https://pressfreedomfoundation.org/" target="_blank">Press Freedom Foundation</a>.
+					<a href="https://pressfreedomfoundation.org/" target="_blank">Freedom of the Press Foundation</a>.
 					Because we need our digital rights in this digital age.
 				</div>
 			</div>
@@ -199,7 +199,7 @@ pledges = pledges.sort(function(a,b){
 							var escapedName = escape(pledge.backer.name);
 							var name = escapedName ? escapedName : "<span style='color:#999'>[anonymous]</span>";
 							
-							name = name.replace(/(\w+\.\w+)/,"<a target='_blank' href='http://$1'>$1</a>"); // Website
+							name = name.replace(/(\w+\.\w+(\.\w+)?)/,"<a target='_blank' href='http://$1'>$1</a>"); // Website
 							name = name.replace(/\@(\w+)/,"<a target='_blank' href='https://twitter.com/$1'>@$1</a>"); // Twitter
 						%>
 							<li>
