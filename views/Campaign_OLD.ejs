@@ -72,9 +72,6 @@ pledges = pledges.sort(function(a,b){
 					RAISED $<%=Math.round(total)%> OUT OF $<%=Math.round(goal)%> FROM <%=pledges.length%> BACKERS
 				</div>
 			</div>
-			<div style="text-align:center; margin-top:10px; font-size:30px; letter-spacing:3px">
-				This game will <span style="text-decoration:underline">only</span> be funded if it reaches its goal by March 11th
-			</div>
 
 			<a href="/pledge" style="text-decoration:none;display:block;width:400px;margin:0 auto">
 				<div class="pledge_button">BACK THIS PROJECT</div>
@@ -83,46 +80,99 @@ pledges = pledges.sort(function(a,b){
 				ends in <span id="countdown"># days, # hours, # minutes, ## seconds</span>
 			</div>
 			<div id="misc_links">
-				<a href="http://demo.nothingtohide.cc">play browser demo (HTML5)</a><!--
+				<a href="http://demo.nothingtohide.cc">play browser demo</a><!--
 				|
 				<a href="/presskit">presskit</a>-->
 			</div>
 
 		</div>
 
-		<!-- LINKS TO STUFF 
-		<div style="width:100%; height:300px; background:#000; margin-top:20px; margin-bottom:40px">
-			<a href="http://demo.nothingtohide.cc">play browser demo</a>
-			<br>
-			<a href="some_gist_file">presskit</a>
-		</div>-->
-
-		<!-- DETAILS -->
-		<div class="project_title"></div>
+		<!-- Details about the game -->
+		<!--div class="project_title" style="letter-spacing:6px">
+			A STORY OF SELF-SURVEILLANCE
+		</div-->
+		<div class="project_title" style="letter-spacing:3px">
+			A STORY OF INSECURITY IN SECURITY
+		</div>
 		<div class="project_info">
 			<div>
-				<div id="thumbnail" style="background-image:url(/thumbs/game_story.png)"></div>
+				<div id="thumbnail" style="background-image:url(/thumbs/game_puzzle.png)"></div>
 				<div id="blurb">
-					<div class="title" style="font-size:24px">A Story of Insecurity In Security</div>
-					In this anti-stealth game, you're forced to help with your own surveillance.
-					Act like you're always on stage. A fake smile for the camera.
-					If you can't hide who you are... you have to hide who you <i>really</i> are.
+					<div class="title">Look Out For Yourself</div>
+					In this anti-stealth game, you're forced to <i>help</i> with your own surveillance via high-tech spy-tech.
+					The puzzles are curious, challenging, and contain more Ludonarrative Metaphors&trade; than leading brands.
 				</div>
 			</div>
 			<div>
-				<div id="thumbnail" style="background-image:url(/thumbs/open_source.png)"></div>
+				<div id="thumbnail" style="background-image:url(/thumbs/game_story.png)"></div>
 				<div id="blurb">
-					<div class="title" style="font-size:19px">Nothing To Hide Has Nothing To Hide</div>
-					All our art/code/music is <a href="https://github.com/ncase/nothing-to-hide" target="_blank">open source</a> and
-					<a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">uncopyrighted</a>.
+					<div class="title">Dystopia 2.0</div>
+					You play as Poppy, a teenager who's never had a private thought in her life.
+					Just your average kid.
+					In this world, hiding is criminal,
+					because only criminals have something to hide.
+				</div>
+			</div>
+			<div>
+				<div id="thumbnail" style="background-image:url(/thumbs/game_why.png)"></div>
+				<div id="blurb">
+					<div class="title">Stop Acting For The Camera</div>
+					Privacy is more than hiding yourself. It's a safe space for finding yourself.
+					&nbsp;&nbsp;
+					<!-- whether it's personal growth, or political dissent -->
+					<!-- privacy is control over yourself. -->
+					I made this game to show my friends and peers, growing up always-connected,
+					why privacy still matters both personally and politically.
+				</div>
+			</div>
+		</div>
+
+		<!-- How it's so open -->
+		<div class="project_title" style="letter-spacing:2px">
+			NOTHING TO HIDE HAS NOTHING TO HIDE
+		</div>
+		<div class="project_info">
+			<div>
+				<div id="thumbnail" style="background-image:url(/thumbs/open_cc0.png)"></div>
+				<div id="blurb">
+					<div class="title">Zero Rights Reserved</div>
+					<i>Nothing To Hide</i> is uncopyrighted with
+					<a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">Creative Commons Zero</a>.
 					You're free to copy, remix, record, and do whatever with this game!
 					By giving up "power" over our art, our art has more power.
 				</div>
 			</div>
 			<div>
+				<div id="thumbnail" style="background-image:url(/thumbs/open_design.png)"></div>
+				<div id="blurb">
+					<div class="title">Open Design</div>
+					<a href="http://www.youtube.com/playlist?list=PLoe8gnGV_AGOeRHWDzI90enuqKDkz7MSp" target="_blank">A developer vlog</a>.
+					<a href="http://tinyletter.com/nothingtohide/letters" target="_blank">An open newsletter</a>.
+					<a href="http://indiegames.com/2013/11/prototype_pick_anti-stealth.html" target="_blank">Public prototypes for 4 months now</a>.
+					I'm totally transparent, and you, the community, really helped me shape this game!
+					I trust you. More than I trust just dumb ol' me, anyway.
+				</div>
+			</div>
+			<div>
+				<div id="thumbnail" style="background-image:url(/thumbs/open_source.png)"></div>
+				<div id="blurb">
+					<div class="title">Open Source</div>
+					All source code and source art files are public on Github.
+					Learn from it, make art with it, or just marvel at how many
+					bad puns I can fit in the code comments.
+				</div>
+			</div>
+		</div>
+
+		<!-- Stuff about your pledge -->
+		<div class="project_title" style="font-size:64px">
+			BUILT FOR THE PUBLIC, BACKED BY THE PUBLIC
+		</div>
+		<div class="project_info">
+			<div>
 				<div id="thumbnail" style="background-image:url(/thumbs/pledge_progress.png)"></div>
 				<div id="blurb">
-					<div class="title" style="font-size:21px">Progress Pledges, Piece-By-Piece</div>
+					<div class="title" style="font-size:21px">Accountability in Progress Pledges</div>
 					I <i>don't</i> take your entire pledge upfront.
 					I only claim part of your pledge for each new milestone I hit, and you can cancel the rest of your pledge at any time.
 					You only complete your pledge <i>when I complete my project.</i>
@@ -131,7 +181,8 @@ pledges = pledges.sort(function(a,b){
 			<div>
 				<div id="thumbnail" style="background-image:url(/thumbs/pledge_charity.png)"></div>
 				<div id="blurb">
-					<div class="title">Defending Our Digital Rights</div>
+					<div class="title">Help Charities Help You</div>
+					In a digital world, we must defend our digital rights.
 					10% of your pledge goes to
 					<a href="https://www.mozilla.org/" target="_blank">Mozilla</a>,
 					<a href="https://www.eff.org/" target="_blank">Electronic Frontier Foundation</a>,
@@ -139,11 +190,21 @@ pledges = pledges.sort(function(a,b){
 					<a href="http://demandprogress.org/" target="_blank">Demand Progress</a>,
 					and the
 					<a href="https://pressfreedomfoundation.org/" target="_blank">Press Freedom Foundation</a>.
-					Because we need our digital rights in this digital age.
+				</div>
+			</div>
+			<div>
+				<div id="thumbnail" style="background-image:url(/thumbs/pledge_split.png)"></div>
+				<div id="blurb">
+					<div class="title">Where Do Your Monies Go?</div>
+					Charity gets 10%.
+					The rest are salaries for artists/coders/musicians for the next ten months.
+					(currently just me & Phyrnna)
+					Any extra costs come out of my pocket.
+					We hope to show you <i>can</i> make open art <i>and</i> make a living.
 				</div>
 			</div>
 		</div>
-		<br>
+		<br><br>
 
 		<!-- Pledge it, yo! -->
 		<div id="pledging">
@@ -258,8 +319,8 @@ pledges = pledges.sort(function(a,b){
 </html>
 
 <!-- Crucial campaign code -->
-<script src="/js/campaign.js"></script>
 <script src="/js/S-S.js"></script>
+<script src="/js/campaign.js"></script>
 
 <!-- begin olark code -->
 <script data-cfasync="false" type='text/javascript'>/*<![CDATA[*/window.olark||(function(c){var f=window,d=document,l=f.location.protocol=="https:"?"https:":"http:",z=c.name,r="load";var nt=function(){
