@@ -5,9 +5,6 @@ var mongo = require('mongodb').MongoClient,
     ObjectID = require('mongodb').ObjectID,
     MONGO_URI = process.env.MONGO_URI;
 
-// Env Vars
-var CRYPTO_SALT = process.env.CRYPTO_SALT;
-
 module.exports = {
 
     init: function(app){

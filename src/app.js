@@ -21,4 +21,7 @@ module.exports = function(){
 	// Payments - credit card, paypal, bitcoin
 	require('./payments').init(app);
 
+    // Stats - For, you know, stats.
+    require('./stats').init(app);
+
 };
