@@ -53,6 +53,9 @@ a{
 	position: relative;
 	margin-right: 10px;
 }
+#everything:hover #campaign_progress{
+	background: #333;
+}
 #campaign_progress_bar{
 	background: #fff;
 	border-top-left-radius: 35px;
@@ -90,7 +93,7 @@ a{
 	letter-spacing: 5px;
 	position: relative;
 }
-.pledge_button:hover{
+#everything:hover .pledge_button{
 	background: #dc3737;
 }
 .pledge_button #arrow{
@@ -102,11 +105,11 @@ a{
     right:-35px;
     top:0;
 }
-.pledge_button:hover #arrow{
+#everything:hover .pledge_button #arrow{
 	border-left: 35px solid #dc3737;
 }
 </style>
-<a href="http://back.nothingtohide.cc/" target="_blank">
+<a href="http://back.nothingtohide.cc/" target="_blank" id="everything">
 	<div id="campaign_progress">
 		<div id="campaign_progress_message">
 			RAISED $<%=Math.round(total)%> OUT OF $<%=Math.round(goal)%> FROM <%=pledges.length%> BACKERS
