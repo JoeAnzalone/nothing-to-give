@@ -21,12 +21,21 @@ module.exports = {
 
         // Pledge Page
         app.get("/pledge",function(req,res){
-            //_getCampaignPledges().done(function(stats){
             res.render("PledgeCreate.ejs",{
-                //pledges: pledges,
                 STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY
             });
-            //});
+        });
+
+        // Embed
+        app.get("/embed",function(req,res){
+            _getCampaignPledges().done(function(pledges){
+                res.render("Embed.ejs",{
+                    pledges: pledges,
+                    campaign: {
+                        goal: 40000 // Hard coded
+                    }
+                });
+            });
         });
 
         // Just the campaign (test purposes)

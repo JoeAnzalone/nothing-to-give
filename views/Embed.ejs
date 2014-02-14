@@ -1,0 +1,165 @@
+<%
+var goal = 100;//campaign.goal;
+var total = 0;
+var amount = {
+	demo: 0,
+	alpha: 0,
+	beta: 0,
+	done: 0
+};
+
+// Pledge totals
+for(var i=0;i<pledges.length;i++){
+	var pledge = pledges[i];
+	var s = pledge.stages;
+
+	amount.demo += s.demo.amount;
+	amount.alpha += s.alpha.amount;
+	amount.beta += s.beta.amount;
+	amount.done += s.done.amount;
+	
+	pledge.total = s.demo.amount + s.alpha.amount + s.beta.amount + s.done.amount;
+	total += pledge.total;
+}
+
+// Pledge sorting
+pledges = pledges.sort(function(a,b){
+	return(b.total-a.total);
+});
+
+%>
+<style>
+@font-face {
+	font-family: 'Ostrich';
+	src: url(/fonts/OstrichSans.woff) format('woff');
+}
+html,body{
+	width:100%; height:100%;
+	font-family: Ostrich;
+	font-size: 30px;
+}
+body{
+	margin:0;
+	background: #bada55;
+}
+a{
+	color: inherit;
+}
+#campaign_progress{
+	background: #000;
+	width:671px; height:66px;
+	float:left;
+	border-radius: 35px;
+	border: 2px solid #fff;
+	position: relative;
+	margin-right: 10px;
+}
+#campaign_progress_bar{
+	background: #fff;
+	border-top-left-radius: 35px;
+	border-bottom-left-radius: 35px;
+	width:0%; height:100%;
+	position: absolute;
+	top:-1; left:-1;
+	overflow: hidden;
+	border: 1px solid #fff;
+	border-right: none;
+}
+#campaign_progress_message{
+	position: absolute;
+	top:23px;
+	text-align: center;
+	width:671px;
+	letter-spacing: 5px;
+	color:#fff;
+}
+#campaign_progress_message[black=true]{
+	color:#000;
+}
+.pledge_button{
+	float:left;
+	background: #cc2727;
+	color:#fff;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	cursor: pointer;
+	padding: 15px 0;
+	text-align: center;
+	width: 280px;
+	font-size: 30px;
+	height: 40px;
+	letter-spacing: 5px;
+	position: relative;
+}
+.pledge_button:hover{
+	background: #dc3737;
+}
+.pledge_button #arrow{
+	width:0; height:0;
+	border-left: 35px solid #cc2727;
+    border-top: 35px solid transparent;
+    border-bottom: 35px solid transparent;
+    position: absolute;
+    right:-35px;
+    top:0;
+}
+.pledge_button:hover #arrow{
+	border-left: 35px solid #dc3737;
+}
+</style>
+<div id="campaign_progress">
+	<div id="campaign_progress_message">
+		RAISED $<%=Math.round(total)%> OUT OF $<%=Math.round(goal)%> FROM <%=pledges.length%> BACKERS
+	</div>
+	<div id="campaign_progress_bar" style="width:<%=(total/goal)*100%>%">
+		<div id="campaign_progress_message" black="true">
+			RAISED $<%=Math.round(total)%> OUT OF $<%=Math.round(goal)%> FROM <%=pledges.length%> BACKERS
+		</div>
+	</div>
+</div>
+<a href="http://back.nothingtohide.cc/" target="_blank">
+	<div class="pledge_button">
+		<div style="position:relative;left:8px">
+			BACK THIS PROJECT
+			<div id="countdown" style="font-size: 19px;position: relative;top: -4px; color:#660000; letter-spacing:1px"></div>
+		</div>
+		<div id="arrow"></div>
+	</div>
+</a>
+<script>
+//////////
+// COUNTDOWN
+///////////
+
+(function(){
+
+var _second = 1000;
+var _minute = _second * 60;
+var _hour = _minute * 60;
+var _day = _hour * 24;
+function toDoubleDigits(num){
+var s = "00"+num;
+return s.substr(s.length-2);
+}
+
+var end = new Date( window.DEADLINE ? window.DEADLINE : '03/12/2014' );
+var countdown = document.getElementById("countdown");
+function tick(){
+
+var now = new Date();
+var distance = end-now;
+if(distance<0) distance=0;
+
+var days = Math.floor(distance / _day);
+var hours = Math.floor((distance % _day) / _hour);
+var minutes = Math.floor((distance % _hour) / _minute);
+var seconds = Math.floor((distance % _minute) / _second);
+
+countdown.innerHTML = toDoubleDigits(days)+" DAYS "+toDoubleDigits(hours)+" HRS "+toDoubleDigits(minutes)+" MINS "+toDoubleDigits(seconds)+" SECS LEFT";
+
+}
+setInterval(tick,1000);
+tick();
+
+})();
+</script>
