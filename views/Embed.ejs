@@ -106,17 +106,17 @@ a{
 	border-left: 35px solid #dc3737;
 }
 </style>
-<div id="campaign_progress">
-	<div id="campaign_progress_message">
-		RAISED $<%=Math.round(total)%> OUT OF $<%=Math.round(goal)%> FROM <%=pledges.length%> BACKERS
-	</div>
-	<div id="campaign_progress_bar" style="width:<%=(total/goal)*100%>%">
-		<div id="campaign_progress_message" black="true">
+<a href="http://back.nothingtohide.cc/" target="_blank">
+	<div id="campaign_progress">
+		<div id="campaign_progress_message">
 			RAISED $<%=Math.round(total)%> OUT OF $<%=Math.round(goal)%> FROM <%=pledges.length%> BACKERS
 		</div>
+		<div id="campaign_progress_bar" style="width:<%=(total/goal)*100%>%">
+			<div id="campaign_progress_message" black="true">
+				RAISED $<%=Math.round(total)%> OUT OF $<%=Math.round(goal)%> FROM <%=pledges.length%> BACKERS
+			</div>
+		</div>
 	</div>
-</div>
-<a href="http://back.nothingtohide.cc/" target="_blank">
 	<div class="pledge_button">
 		<div style="position:relative;left:8px">
 			BACK THIS PROJECT
