@@ -81,11 +81,10 @@ a{
 	margin: 0 auto;
 	border-radius: 25px;
 	position: relative;
+	overflow: hidden;
 }
 #campaign_progress_bar{
 	background: #cc2727;
-	border-top-left-radius: 25px;
-	border-bottom-left-radius: 25px;
 	width:0%; height:100%;
 	position: absolute;
 }
